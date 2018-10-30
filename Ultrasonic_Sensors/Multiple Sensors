@@ -1,6 +1,6 @@
 const int pingPin1 = 13; // Trigger Pin of Ultrasonic Sensor
 const int echoPin1 = 12; // Echo Pin of Ultrasonic Sensor
-const int pingPin2 = 11;
+const int pingPin2 = 11; // Trigger pin of second ultra sonic sensor
 const int echoPin2 = 10;
 
 void setup() {
