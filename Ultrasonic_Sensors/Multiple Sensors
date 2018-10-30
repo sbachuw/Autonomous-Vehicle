@@ -8,8 +8,8 @@ void setup() {
 }
 
 void loop() {
-  ultrasonic1(); //sensor1
-  delay(1000);
+  ultrasonic1();  // to execute the 1st ultrasonic sensor
+  delay(1000);    // to dealy the next signal
   ultrasonic2();
   delay(1000);
 }
