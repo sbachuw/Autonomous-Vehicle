@@ -1,0 +1,60 @@
+const int pingPin1 = 13; // Trigger Pin of Ultrasonic Sensor
+const int echoPin1 = 12; // Echo Pin of Ultrasonic Sensor
+
+float varcm1 = 1.12184278324081E-05;  // variance determined using excel and reading samples of raw sensor data
+float varProcess = 1e-8;
+float Pc = 0.0;
+float G = 0.0;
+float P = 1.0;
+float Xp = 0.0;
+float Zp = 0.0;
+float Xe = 0.0;
+
+void setup() {
+  Serial.begin(9600); // Starting Serial Terminal
+}
+
+void loop() {
+  ultrasonic1();
+  delay(1000);
+}
+
+void ultrasonic1()  {
+  long duration1, inches1, cm1;
+  pinMode(pingPin1, OUTPUT);
+  digitalWrite(pingPin1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pingPin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pingPin1, LOW);
+  pinMode(echoPin1, INPUT);
+  duration1 = pulseIn(echoPin1, HIGH);
+  inches1 = microsecondsToInches1(duration1);
+  cm1 = microsecondsToCentimeters1(duration1);
+  Serial.print("Ultrasonic:");
+  Serial.print(inches1);
+  Serial.print("in, ");
+  Serial.print(cm1);
+  Serial.print("cm");
+  Serial.println();
+
+  // kalman process
+  Pc = P + varProcess;
+  G = Pc / (Pc + varcm1);  // kalman gain
+  P = (1 - G) * Pc;
+  Xp = Xe;
+  Zp = Xp;
+  Xe = G * (cm1 - Zp) + Xp; // the kalman estimate of the sensor voltag
+
+  Serial.print("Filtered cm1: ");
+  Serial.println(Xe);
+  delay(20);
+}
+
+long microsecondsToInches1(long microseconds1) {
+  return microseconds1 / 74 / 2;
+}
+
+long microsecondsToCentimeters1(long microseconds1) {
+  return microseconds1 / 29 / 2;
+}
