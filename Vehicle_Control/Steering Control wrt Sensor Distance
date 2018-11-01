@@ -1,0 +1,214 @@
+#include <Servo.h>
+Servo ssm;
+Servo esc;
+int steering = 90;
+int velocity = 90;
+
+
+const int PingPin_F = 13; // Trigger Pin of Ultrasonic Sensor
+const int echoPin_F = 12; // Echo Pin of Ultrasonic Sensor
+const int PingPin_L = 11; // Trigger pin of second ultra sonic sensor
+const int echoPin_L = 10;
+const int PingPin_R = 9; // Trigger pin of second ultra sonic sensor
+const int echoPin_R = 8;
+long duration_F, inches_F, cm_F;
+long duration_L, inches_L, cm_L;
+long duration_R, inches_R, cm_R;
+
+long time_front, distance_front, minimum_front, distance_left, minimum_left, time_left, distance_right, minimum_right, time_right;
+
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Begin Steering Test");
+  ssm.attach(7);
+  esc.attach(6);
+  setVehicle(90, 90);
+  delay(10000);
+}
+
+void loop()
+{
+
+  ultrasonic_F();
+  delay(200);
+  ultrasonic_L();
+  delay(200);
+  ultrasonic_R();
+  delay(200);
+
+  Serial.println("Loop Complete");
+
+  while (cm_F <= 30 && cm_L >30 && cm_R > 30
+  )
+  {
+    turn_left();
+    Serial.println("Turning Left");
+    delay(100);
+    ultrasonic_F();
+    delay(100);
+    ultrasonic_L();
+    delay(100);
+    ultrasonic_R();
+    delay(100);
+    break;
+  }
+
+  while (cm_F <= 30 && cm_L <= 30)
+  {
+    turn_right();
+    Serial.println("Turning Right");
+    delay(100);
+    ultrasonic_F();
+    delay(100);
+    ultrasonic_L();
+    delay(100);
+    ultrasonic_R();
+    delay(100);
+    break;
+  }
+
+  while (cm_R <= 30)
+  {
+    turn_left();
+    Serial.println("Turning Left");
+    delay(100);
+    ultrasonic_F();
+    delay(100);
+    ultrasonic_L();
+    delay(100);
+    ultrasonic_R();
+    delay(100);
+    break;
+  }
+
+  while (cm_L <= 30)
+  {
+    turn_right();
+    Serial.println("Turning Right");
+    delay(100);
+    ultrasonic_F();
+    delay(100);
+    ultrasonic_L();
+    delay(100);
+    ultrasonic_R();
+    delay(100);
+    break;
+  }
+
+  while (cm_F <= 30 && cm_R <= 30)
+  {
+    turn_left();
+    Serial.println("Turning Left");
+    delay(100);
+    ultrasonic_F();
+    delay(100);
+    ultrasonic_L();
+    delay(100);
+    ultrasonic_R();
+    delay(100);
+    break;
+  }
+  //  if (distance_front <= minimum_front && distance_left <= minimum_left && distance_right <= minimum_right)
+  //  {
+  //    stop_robot();
+  //  }
+  if (cm_F > 30 && cm_L > 30 && cm_R > 30)
+  {
+    setVehicle(90, 90);
+    Serial.println("Turning Left");
+    delay(100);
+    ultrasonic_F();
+    delay(100);
+    ultrasonic_L();
+    delay(100);
+    ultrasonic_R();
+    delay(100);
+  }
+  delay(50);
+}
+
+void ultrasonic_F()  {
+  pinMode(PingPin_F, OUTPUT);
+  digitalWrite(PingPin_F, LOW);
+  delayMicroseconds(2);
+  digitalWrite(PingPin_F, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PingPin_F, LOW);
+  pinMode(echoPin_F, INPUT);
+  duration_F = pulseIn(echoPin_F, HIGH);
+  inches_F = duration_F / 74 / 2;
+  cm_F = duration_F / 29 / 2;
+  Serial.println("Ultrasonic_F:");
+  Serial.print(inches_F);
+  Serial.print("in, ");
+  Serial.print(cm_F);
+  Serial.print("cm");
+  Serial.println();
+}
+
+
+void ultrasonic_L()  {
+  pinMode(PingPin_L, OUTPUT);
+  digitalWrite(PingPin_L, LOW);
+  delayMicroseconds(2);
+  digitalWrite(PingPin_L, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PingPin_L, LOW);
+  pinMode(echoPin_L, INPUT);
+  duration_L = pulseIn(echoPin_L, HIGH);
+  inches_L = duration_L / 74 / 2;
+  cm_L = duration_L / 29 / 2;
+  Serial.println("ultrasonic_L:");
+  Serial.print(inches_L);
+  Serial.print("in, ");
+  Serial.print(cm_L);
+  Serial.print("cm");
+  Serial.println();
+}
+
+void ultrasonic_R()  {
+  pinMode(PingPin_R, OUTPUT);
+  digitalWrite(PingPin_R, LOW);
+  delayMicroseconds(2);
+  digitalWrite(PingPin_R, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PingPin_R, LOW);
+  pinMode(echoPin_R, INPUT);
+  duration_R = pulseIn(echoPin_R, HIGH);
+  inches_R = duration_R / 74 / 2;
+  cm_R = duration_R / 29 / 2;
+  Serial.println("ultrasonic_R:");
+  Serial.print(inches_R);
+  Serial.print("in, ");
+  Serial.print(cm_R);
+  Serial.print("cm");
+  Serial.println();
+}
+
+void stop_robot()
+{
+  setVehicle(90, 90);
+  delay(100);
+
+}
+
+void turn_left()
+{
+  setVehicle(45, 90);
+  delay(100);
+}
+
+void turn_right()
+{
+  setVehicle(135, 90);
+  delay(100);
+}
+
+void setVehicle(int s, int v)
+{
+  s = min(max(0, s), 180);
+  v = min(max(75, v), 105);
+  ssm.write(s);
+  esc.write(v);
+}
