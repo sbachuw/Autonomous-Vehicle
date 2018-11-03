@@ -1,3 +1,4 @@
+// we need the distance to be in mm and not cm
 const int pingPin1 = 13; // Trigger Pin of Ultrasonic Sensor
 const int echoPin1 = 12; // Echo Pin of Ultrasonic Sensor
 
