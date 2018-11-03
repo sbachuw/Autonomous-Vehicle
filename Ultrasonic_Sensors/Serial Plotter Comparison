@@ -57,9 +57,9 @@ void ultrasonic1()  {
 }
 
 long microsecondsToInches1(long microseconds1) {
-  return microseconds1 / 74 / 2;
+  return microseconds1 / 74 / 2; // have you used this formula to convert time directly to distance in cm?
 }
 
 long microsecondsToCentimeters1(long microseconds1) {
-  return microseconds1 / 29 / 2;
+  return microseconds1 / 29 / 2; //why is this formula used?
 }
