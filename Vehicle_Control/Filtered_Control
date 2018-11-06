@@ -49,18 +49,15 @@ void setup()
   ssm.attach(7);
   esc.attach(6);
   setVehicle(90, 90);
-  delay(1000);
+  delay(3000);
 }
 
 void loop()
 {
   //Initial US Distances
   ultrasonic_F();
-  //delay(20);
   ultrasonic_L();
-  //delay(20);
   ultrasonic_R();
-  //delay(20);
 
   //All free condition, go straight
   while (Xe_F > 34 && Xe_L > 32 && Xe_R > 32)
@@ -114,7 +111,7 @@ void loop()
   }
 
   //Right-Turn
-  while (Xe_F > 34 && Xe_L < 31 && Xe_R > 31)
+  while (Xe_F > 34 && Xe_L <= 31 && Xe_R > 31)
   {
     setVehicle(135, 95); //turn_right();
     delay(75);
