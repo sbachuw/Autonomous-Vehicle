@@ -1,7 +1,7 @@
 #include <Servo.h> //Included servo library
 
 Servo ssm; //Created object ssm
-Servo esc;
+Servo esc; //Created object esc
 
 int steering = 90;
 int velocity = 90;
