@@ -1,4 +1,4 @@
-#include <Servo.h>
+#include <Servo.h> //Included servo library
 
 Servo ssm;
 Servo esc;
