@@ -1,6 +1,6 @@
 #include <Servo.h> //Included servo library
 
-Servo ssm;
+Servo ssm; //Created object ssm
 Servo esc;
 
 int steering = 90;
