@@ -1,0 +1,326 @@
+#include <Servo.h>
+#include <Wire.h>
+#include "rgb_lcd.h"
+
+Servo ssm;
+Servo esc;
+//rgb_lcd lcd;
+
+//const int colorR = 255;
+//const int colorG = 0;
+//const int colorB = 0;
+
+int steering = 90;
+int velocity = 90, steer;
+
+int a, b, b_1;
+int u, u_1, u_2;
+float e = 0, e1 = 0, e2 = 0; float kp = 1.1, ki = 0.0125, kd = 0.80;// Define PID parameters
+float k1 = kp + ki + kd;
+float k2 = -kp - 2 * kd;
+float k3 = kd;
+
+float e_1 = 0, e1_1 = 0, e2_1 = 0; float kp_1 = 1.8, ki_1 = 0.002, kd_1 = 0.5; // Define PID parameters
+float k1_1 = kp_1 + ki_1 + kd_1;
+float k2_1 = -kp_1 - 2 * kd_1;
+float k3_1 = kd_1;
+
+ float kp_2 = 3.4, ki_2 = 0.0022, kd_2 = 0.38; // Define PID parameters
+ float k1_2 = kp_2 + ki_2 + kd_2; 
+ float k2_2 = -kp_2 - 2 * kd_2;
+ float k3_2 = kd_2;
+ float e2_2;
+ float e1_2, e_2; // Compute current control error
+
+
+const int TrigPin_F = 13; // Trigger Pin of Ultrasonic Sensor
+const int EchoPin_F = 12; // Echo Pin of Ultrasonic Sensor
+const int TrigPin_L = 11; // Trigger pin of second ultra sonic sensor
+const int EchoPin_L = 10;
+const int TrigPin_R = 9; // Trigger pin of second ultra sonic sensor
+const int EchoPin_R = 8;
+long duration_F, inches_F, cm_F;
+long duration_L, inches_L, cm_L;
+long duration_R, inches_R, cm_R;
+
+float var_F = 0.245431364;  // variance determined using excel and reading samples of raw sensor data
+float varProcess_F = 1e-0;
+float Pc_F = 0.0;
+float G_F = 0.0;
+float P_F = 1.0;
+float Xp_F = 0.0;
+float Zp_F = 0.0;
+float Xe_F = 0.0;
+
+float var_L = 0.245431364;  // variance determined using excel and reading samples of raw sensor data
+float varProcess_L = 1e-0;
+float Pc_L = 0.0;
+float G_L = 0.0;
+float P_L = 1.0;
+float Xp_L = 0.0;
+float Zp_L = 0.0;
+float Xe_L = 0.0;
+
+float var_R = 0.245431364;  // variance determined using excel and reading samples of raw sensor data
+float varProcess_R = 1e-0;
+float Pc_R = 0.0;
+float G_R = 0.0;
+float P_R = 1.0;
+float Xp_R = 0.0;
+float Zp_R = 0.0;
+float Xe_R = 0.0;
+long time_front, distance_front, minimum_front, distance_left, minimum_left, time_left, distance_right, minimum_right, time_right;
+
+void setup()
+{
+  //Serial.begin(9600);
+  //  lcd.begin(16, 2);
+  //  lcd.setRGB(colorR, colorG, colorB);
+  Serial.begin(9600);
+  ssm.attach(7);
+  esc.attach(6);
+  pinMode(TrigPin_F, OUTPUT);
+  pinMode(EchoPin_F, INPUT);
+  pinMode(TrigPin_L, OUTPUT);
+  pinMode(EchoPin_L, INPUT);
+  pinMode(TrigPin_R, OUTPUT);
+  pinMode(EchoPin_R, INPUT);
+  setVehicle(90, 90);
+  delay(3000);
+}
+
+void loop()
+{
+  //Initial US Distances
+  ultrasonic_F();
+  ultrasonic_L();
+  ultrasonic_R();
+  PID_c();
+
+  while (Xe_F > 150 && Xe_L > 30 && Xe_R > 30)
+  {
+    PID_c();
+    a = 90 + u;
+    setVehicle(90, 90);
+    delay(50);
+    setVehicle(90, a);
+    delay(60);
+    ultrasonic_F();
+    ultrasonic_L();
+    ultrasonic_R();
+    //    const int colorR = 0;
+    //    const int colorG = 255;
+    //    const int colorB = 0;
+    //    lcd.begin(16, 2);
+    //    lcd.setRGB(colorR, colorG, colorB);
+    //    lcd.setCursor(0, 0);
+    //    lcd.print("___LET'S GO!___");
+    //    USLCD();
+  }
+
+  while (32 < Xe_F && Xe_L > 30 && Xe_R > 30)
+  {
+    PID_c();
+    a = 90 + u;
+    setVehicle(90, 90);
+    delay(40);
+    setVehicle(90, a);
+    delay(60);
+    setVehicle(90, 90);
+    delay(40);
+    ultrasonic_F();
+    ultrasonic_L();
+    ultrasonic_R();
+    //    const int colorR = 0;
+    //    const int colorG = 255;
+    //    const int colorB = 0;
+    //    lcd.begin(16, 2);
+    //    lcd.setRGB(colorR, colorG, colorB);
+    //    lcd.setCursor(0, 0);
+    //    lcd.print("___LET'S GO!___");
+    //    USLCD();
+  }
+
+  //Front Block - STOP!
+  while (28 < Xe_F <= 32)
+  {
+    setVehicle(90, 90);
+    delay(500);
+    ultrasonic_F();
+    ultrasonic_L();
+    ultrasonic_R();
+    //    const int colorR = 0;
+    //    const int colorG = 255;
+    //    const int colorB = 0;
+    //    lcd.begin(16, 2);
+    //    lcd.setRGB(colorR, colorG, colorB);
+    //    lcd.setCursor(0, 0);
+    //    lcd.print("___STOP!___");
+    //    USLCD();
+    break;
+  }
+
+  //Too Close - Back UP!
+  while (Xe_F <= 28)
+  {
+    setVehicle(90, 90);
+    delay(50);
+    setVehicle(90, 85);
+    delay(40);
+    setVehicle(90, 90);
+    delay(50);
+    ultrasonic_F();
+    ultrasonic_L();
+    ultrasonic_R();
+    //    const int colorR = 255;
+    //    const int colorG = 0;
+    //    const int colorB = 0;
+    //    lcd.begin(16, 2);
+    //    lcd.setRGB(colorR, colorG, colorB);
+    //    lcd.setCursor(0, 0);
+    //    lcd.print("___BACK UP!___");
+    //    USLCD();
+  }
+
+  // Left-Turn
+  while (Xe_F > 32 && Xe_L > 30 && Xe_R <= 30)
+  {
+    PID_c();
+    PID_sl();
+    a = 90 + u;
+    b = 90 - 0.3*u_1;
+    setVehicle(b, a); //turn_left();
+    delay(60);
+    setVehicle(90, 90); //turn_left();
+    delay(30);
+    ultrasonic_F();
+    ultrasonic_L();
+    ultrasonic_R();
+  }
+
+  //Right-Turn
+  while (Xe_F > 32 && Xe_L < 30 && Xe_R > 30)
+  {
+    PID_c();
+    PID_sr();
+    a = 90 + u;
+    b_1 = 90 + 0.028*u_1;
+    setVehicle(b_1, a); //turn_right();
+    delay(100);
+    setVehicle(90, 90); //turn_right();
+    delay(75);
+    ultrasonic_F();
+    ultrasonic_L();
+    ultrasonic_R();
+  }
+}
+
+void ultrasonic_F()  {
+  digitalWrite(TrigPin_F, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TrigPin_F, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TrigPin_F, LOW);
+  duration_F = pulseIn(EchoPin_F, HIGH);
+  cm_F = duration_F / 29 / 2;
+  Pc_F = P_F + varProcess_F;
+  G_F = Pc_F / (Pc_F + var_F);  // kalman gain
+  P_F = (1 - G_F) * Pc_F;
+  Xp_F = Xe_F;
+  Zp_F = Xp_F;
+  Xe_F = G_F * (cm_F - Zp_F) + Xp_F; // the kalman estimate of the sensor voltag
+}
+
+
+void ultrasonic_L()  {
+
+  digitalWrite(TrigPin_L, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TrigPin_L, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TrigPin_L, LOW);
+  duration_L = pulseIn(EchoPin_L, HIGH);
+  cm_L = duration_L / 29 / 2;
+  Pc_L = P_L + varProcess_L;
+  G_L = Pc_L / (Pc_L + var_L);  // kalman gain
+  P_L = (1 - G_L) * Pc_L;
+  Xp_L = Xe_L;
+  Zp_L = Xp_L;
+  Xe_L = G_L * (cm_L - Zp_L) + Xp_L; // the kalman estimate of the sensor voltag
+}
+
+void ultrasonic_R()  {
+  digitalWrite(TrigPin_R, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TrigPin_R, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TrigPin_R, LOW);
+  duration_R = pulseIn(EchoPin_R, HIGH);
+  cm_R = duration_R / 29 / 2;
+  Pc_R = P_R + varProcess_R;
+  G_R = Pc_R / (Pc_R + var_R);  // kalman gain
+  P_R = (1 - G_R) * Pc_R;
+  Xp_R = Xe_R;
+  Zp_R = Xp_R;
+  Xe_R = G_R * (cm_R - Zp_R) + Xp_R; // the kalman estimate of the sensor voltage
+}
+
+void stop_robot()
+{
+  setVehicle(90, 90);
+  delay(20);
+}
+
+void turn_left()
+{
+  setVehicle(45, 90);
+  delay(20);
+}
+
+void turn_right()
+{
+  setVehicle(135, 90);
+  delay(20);
+}
+
+void setVehicle(int s, int v)
+{
+  s = min(max(0, s), 180);
+  v = min(max(75, v), 105);
+  ssm.write(s);
+  esc.write(v);
+}
+
+void PID_c()
+{
+  k1 = kp + ki + kd;
+  k2 = -kp - 2 * kd;
+  k3 = kd;
+  e2 = e1;
+  e1 = e;
+  e = (95 - esc.read()); // Compute current control error
+  u = u + k1 * e + k2 * e1 + k3 * e2; //Implement u as control input
+  
+}
+void PID_sl()
+{
+  k1_1 = kp_1 + ki_1 + kd_1;
+  k2_1 = -kp_1 - 2 * kd_1;
+  k3_1 = kd_1;
+  e2_1 = e1_1;
+  e1_1 = e_1;
+  e_1 = ( Xe_L - 30); // Compute current control error
+  u_1 = u_1 + k1_1 * e_1 + k2_1 * e1_1 + k3_1 * e2_1; //Implement u as control input
+  Serial.println(u_1);
+}
+void PID_sr()
+{
+  k1_2 = kp_2 + ki_2 + kd_2;
+  k2_2 = -kp_2 - 2 * kd_2;
+  k3_2 = kd_2;
+  e2_2 = e1_2;
+  e1_2 = e_2;
+  e_2 = ( Xe_R - 30); // Compute current control error
+  u_2 = u_2 + k1_2 * e_2 + k2_2 * e1_2 + k3_2 * e2_2; //Implement u as control input
+  Serial.println(u_2);
+}
