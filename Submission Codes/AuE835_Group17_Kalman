@@ -1,0 +1,72 @@
+const int pingPin1 = 13; // Trigger Pin of Ultrasonic Sensor
+const int echoPin1 = 12; // Echo Pin of Ultrasonic Sensor
+
+float varduration1 = 293.3168367;  // variance determined using excel and reading samples of raw sensor data
+float varProcess = 1e1;
+float Pc = 0.0;
+float G = 0.0;
+float P = 1.0;
+float Xp = 0.0;
+float Zp = 0.0;
+float Xe = 0.0;
+
+void setup() {
+  Serial.begin(9600); // Starting Serial Terminal
+}
+
+void loop() {
+  ultrasonic1();
+  delay(100);
+}
+
+void ultrasonic1()  {
+  long duration1, inches1, cm1;
+  pinMode(pingPin1, OUTPUT);
+  digitalWrite(pingPin1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pingPin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pingPin1, LOW);
+  pinMode(echoPin1, INPUT);
+  duration1 = pulseIn(echoPin1, HIGH);
+  Serial.print("Time before filtering: ");
+  Serial.print(duration1);
+  Serial.print(" usec, ");
+
+  // kalman process
+  Pc = P + varProcess;
+  G = Pc / (Pc + varduration1);  // kalman gain
+  P = (1 - G) * Pc;
+  Xp = Xe;
+  Zp = Xp;
+  Xe = G * (duration1 - Zp) + Xp; // the kalman estimate
+
+  Serial.print("Time before caliberation: ");
+  Serial.print(Xe);
+  Serial.print(" usec, ");
+  long Final_Dist;
+  if (Xe < 2000)
+  {
+    Final_Dist = (Xe / 2) / 2.81;
+  }
+  if (2000 <= Xe < 6000)
+  {
+    Final_Dist = (Xe / 2) / 2.816;
+  }
+  if (6000 <= Xe < 7000)
+  {
+    Final_Dist = (Xe / 2) / 2.835;
+  }
+  if (7000 <= Xe <= 8000)
+  {
+    Final_Dist = (Xe / 2) / 2.817;
+  }
+  if (Xe > 8000)
+  {
+    Final_Dist = (Xe / 2) / 2.862;
+  }
+  Serial.print("Final Distance: ");
+  Serial.print(Final_Dist);
+  Serial.print(" mm");
+  Serial.println();
+}
