@@ -221,7 +221,6 @@ void ultrasonic_F()  {
 }
 
 void ultrasonic_L()  {
-
   digitalWrite(TrigPin_L, LOW);
   delayMicroseconds(2);
   digitalWrite(TrigPin_L, HIGH);
