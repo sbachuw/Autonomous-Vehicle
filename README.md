@@ -27,8 +27,8 @@ Primary tasks for this project included:
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![GitHub Logo](/images/logo.png)
-Format: ![Alt Text](url)
+[Link](url) and ![Car](K:\Courses\Automotive Electronics Integration -8350\Projects\Project 1\Images\Filtered Ultrasonic Distance Readings.PNG)
+
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
