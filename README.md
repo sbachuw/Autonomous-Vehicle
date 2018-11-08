@@ -9,12 +9,12 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```markdown
-Syntax highlighted code block
+Primary tasks for this project included:
 
-# Header 1
-## Header 2
-### Header 3
-
+# Ultrasonic distance Filtering
+## Sensor Caliberation
+### Electronic Speed Control and Sterring Servo Motor Control
+ 
 - Bulleted
 - List
 
