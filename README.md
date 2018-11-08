@@ -27,7 +27,7 @@ Primary tasks for this project included:
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](https://github.com/kaushiktilve/Autonomous-Vehicle/blob/master/Images/Filtered%20Ultrasonic%20Distance%20Readings.PNG)
+[Link](url) and ![https://github.com/kaushiktilve/Autonomous-Vehicle/blob/master/Images/Filtered%20Ultrasonic%20Distance%20Readings.PNG](src)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
