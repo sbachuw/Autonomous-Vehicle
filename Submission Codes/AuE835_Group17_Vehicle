@@ -1,26 +1,31 @@
+//Include relevant libraries
 #include <Servo.h>
 #include <Wire.h>
 #include "rgb_lcd.h"
 
+//Define objects
 Servo ssm;
 Servo esc;
 rgb_lcd lcd;
 
+//Create color variables
 const int colorR;
 const int colorG;
 const int colorB;
 
+//Create steering velocity variables
 int steering = 90;
 int velocity = 90;
 
-int a, b, u;
-
+//PID control variables
 float e = 0, e1 = 0, e2 = 0; 
 float kp = 1.3, ki = 0.0125, kd = 0.9; // Define PID parameters through tuning 
 float k1 = kp + ki + kd;
 float k2 = -kp - 2 * kd;
 float k3 = kd;
+int a, b, u; 
 
+//Ultrasonic sensor pin declarations
 const int TrigPin_F = 13; // Trigger Pin of Ultrasonic Sensor
 const int EchoPin_F = 12; // Echo Pin of Ultrasonic Sensor
 const int TrigPin_L = 11; // Trigger pin of second ultra sonic sensor
@@ -31,6 +36,7 @@ long duration_F, inches_F, cm_F;
 long duration_L, inches_L, cm_L;
 long duration_R, inches_R, cm_R;
 
+//Filtering variables for front sensor
 float var_F = 0.245431364;  // variance determined using excel and reading samples of raw sensor data
 float varProcess_F = 1e2;
 float Pc_F = 0.0;
@@ -40,6 +46,7 @@ float Xp_F = 0.0;
 float Zp_F = 0.0;
 float Xe_F = 0.0;
 
+//Filtering variables for left sensor
 float var_L = 0.245431364;  // variance determined using excel and reading samples of raw sensor data
 float varProcess_L = 1e2;
 float Pc_L = 0.0;
@@ -49,6 +56,7 @@ float Xp_L = 0.0;
 float Zp_L = 0.0;
 float Xe_L = 0.0;
 
+//Filtering variables for right sensor
 float var_R = 0.245431364;  // variance determined using excel and reading samples of raw sensor data
 float varProcess_R = 1e2;
 float Pc_R = 0.0;
@@ -60,7 +68,7 @@ float Xe_R = 0.0;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(9600); //Begin serial communication
   ssm.attach(7);
   esc.attach(6);
   lcd.begin(16, 2);
@@ -158,7 +166,6 @@ void loop()
     setVehicle(b, a); 
     delay(45);
     setVehicle(b, 90); 
-    
     delay(25);
     ultrasonic_F();
     ultrasonic_L();
@@ -213,7 +220,6 @@ void ultrasonic_F()  {
   Xe_F = G_F * (cm_F - Zp_F) + Xp_F; // the kalman estimate
 }
 
-
 void ultrasonic_L()  {
 
   digitalWrite(TrigPin_L, LOW);
@@ -248,26 +254,7 @@ void ultrasonic_R()  {
   //Serial.println(Xe_R);
 }
 
-void stop_robot()
-{
-  setVehicle(90, 90);
-  delay(20);
-}
-
-void turn_left()
-{
-  setVehicle(45, 90);
-  delay(20);
-}
-
-void turn_right()
-{
-  setVehicle(135, 90);
-  delay(20);
-}
-
 void setVehicle(int s, int v)
-
 {
   s = min(max(0, s), 180);
   v = min(max(75, v), 105);
