@@ -2,7 +2,7 @@ const int pingPin1 = 13; // Trigger Pin of Ultrasonic Sensor
 const int echoPin1 = 12; // Echo Pin of Ultrasonic Sensor
 
 float varduration1 = 293.3168367;  // variance determined using excel and reading samples of raw sensor data
-float varProcess = 1e1;
+float varProcess = 1e1; // Set Q value
 float Pc = 0.0;
 float G = 0.0;
 float P = 1.0;
