@@ -27,7 +27,7 @@ Primary tasks for this project included:
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Car](K:\Courses\Automotive Electronics Integration -8350\Projects\Project 1\Images\Filtered Ultrasonic Distance Readings.PNG)
+[Link](url) and ![Image](src)
 
 ```
 
