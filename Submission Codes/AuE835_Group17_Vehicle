@@ -79,13 +79,13 @@ void setup()
   pinMode(EchoPin_L, INPUT);
   pinMode(TrigPin_R, OUTPUT);
   pinMode(EchoPin_R, INPUT);
-  setVehicle(90, 90);
-  delay(3000);
+  setVehicle(90, 90);  // set vehicle to neutral
+  delay(3000);          // 3 seconds dealay to get ready
 }
 
 void loop()
 {
-  //Initial US Distances
+  //Initial Ultra Sonic Distances
   ultrasonic_F();
   ultrasonic_L();
   ultrasonic_R();
