@@ -27,7 +27,8 @@ Primary tasks for this project included:
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
+[Link](url) and ![GitHub Logo](/images/logo.png)
+Format: ![Alt Text](url)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
