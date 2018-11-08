@@ -12,11 +12,15 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
 Primary tasks for this project included:
 
 # Ultrasonic distance Filtering
-## Sensor Caliberation
-### Electronic Speed Control and Sterring Servo Motor Control
- 
 - Bulleted
 - List
+## Sensor Caliberation
+- Bulleted
+- List
+### Electronic Speed Control and Sterring Servo Motor Control
+- Bulleted
+- List
+ 
 
 1. Numbered
 2. List
