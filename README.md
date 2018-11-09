@@ -8,18 +8,18 @@ Here are some of the details of this project completed by:
 3. _Akil Patheria_
 4. _Kaushik Tilve_ 
 
-```markdown
+
 Primary tasks for this project included:
 
 # Ultrasonic distance Filtering
 - Sensor values filtering using Kalman Filter
 - Piece-wise fitting using appropritate caliberation function
 
-# Electronic Speed Control (ESC) and Sterring Servo Motor Control (SSM)
+## Electronic Speed Control (ESC) and Sterring Servo Motor Control (SSM)
 - We've used PID control to model our ESC and SSM
 - Giving our input as pulsed waveform (PWM) we controlled both motors in tandem
 
-# Lane Keeping
+### Lane Keeping
 - The car should be inside the lane marker, not deviating outside of it
 
 # Adaptive Cruise Control 
@@ -31,8 +31,6 @@ Primary tasks for this project included:
 
 ![image](https://user-images.githubusercontent.com/36165953/48277194-f1fbec80-e417-11e8-96cf-fe32514ded3d.png)
 
-
-```
 **Achievements**
 1. Fastest recorded car time around the track (17 seconds)
 2. Covered all 5 checkpoints inside the lane markers
