@@ -38,4 +38,4 @@ Primary tasks for this project included:
 
 **Support/Contact**
 
-Are you not finding what you're looking for? You can reach out to us at [Kaushik's website](https://www.kaushiktilve.com/contact) and we’ll help you sort it out!
+Are you not finding what you're looking for? You can reach out to us at [Kaushik's website](https://www.kaushiktilve.com/contact) or email us at sbachuw@clemson.edu and we’ll help you sort it out!
