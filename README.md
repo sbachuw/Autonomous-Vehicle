@@ -1,37 +1,37 @@
 ## Autonomous Vehicle 
 
-You can use the [editor on GitHub](https://github.com/kaushiktilve/Autonomous-Vehicle/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Take a look at the small-scale Automous Vehicle we built for our class project! 
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```markdown
 Primary tasks for this project included:
 
 # Ultrasonic distance Filtering
-- Bulleted
-- List
-## Sensor Caliberation
-- Bulleted
-- List
-### Electronic Speed Control and Sterring Servo Motor Control
-- Bulleted
-- List
- 
+- Sensor values filtering using Kalman Filter
+- Piece-wise fitting using appropritate caliberation function
 
-1. Numbered
-2. List
+# Electronic Speed Control (ESC) and Sterring Servo Motor Control (SSM)
+- We've used PID control to model our ESC and SSM
+- Giving our input as pulsed waveform (PWM) we controlled both motors in tandem
+
+# Lane Keeping
+- The car should be inside the lane marker, not deviating outside of it
+
+# Adaptive Cruise Control 
+- It needs to eventually come to a halt or adjust speed accordingly to a front obstacle or a car ahead 
+
+
 
 **Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
 
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+**Achievements**
+1. Fastest car around the track (17 seconds)
+2. Covered all 5 checkpoints inside the lane markers
+3. Stopped precisely 300 mm from front obstacle 
 
 ### Jekyll Themes
 
