@@ -1,4 +1,4 @@
-### Autonomous Vehicle 
+## Autonomous Vehicle
 
 Take a look at the small-scale Automous Vehicle we built for our Automotive Electronics class project! 
 
@@ -35,6 +35,6 @@ Primary tasks for this project included:
 3. Stopped precisely 300 mm from front obstacle 
 
 
-### Support or Contact
 
+**Support/Contact**
 Are you not finding what you're looking for? You can reach out to us at [Kaushik's website](https://www.kaushiktilve.com/contact) and we’ll help you sort it out!
