@@ -8,6 +8,8 @@ Here are some of the details of this project completed by:
 3. _Akil Patheria_
 4. _Kaushik Tilve_ 
 
+![image](https://user-images.githubusercontent.com/36165953/48277194-f1fbec80-e417-11e8-96cf-fe32514ded3d.png)
+
 Primary tasks for this project included:
 
 ## Ultrasonic distance Filtering
@@ -23,12 +25,6 @@ Primary tasks for this project included:
 
 ## Adaptive Cruise Control 
 • It needs to eventually come to a halt or adjust speed accordingly to a front obstacle or a car ahead 
-
-
-
-**Bold** and _Italic_ and `Code` text
-
-![image](https://user-images.githubusercontent.com/36165953/48277194-f1fbec80-e417-11e8-96cf-fe32514ded3d.png)
 
 **Achievements**
 1. Fastest recorded car time around the track (17 seconds)
