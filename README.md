@@ -1,8 +1,12 @@
 ## Autonomous Vehicle 
 
-Take a look at the small-scale Automous Vehicle we built for our class project! 
+Take a look at the small-scale Automous Vehicle we built for our Automotive Electronics class project! 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Here are some of the details of this project completed by:
+1. _Sanket Bachuwar_
+2. _Yong He_
+3. _Akil Patheria_
+4. _Kaushik Tilve_ 
 
 ```markdown
 Primary tasks for this project included:
