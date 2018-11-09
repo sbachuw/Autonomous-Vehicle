@@ -29,7 +29,8 @@ Primary tasks for this project included:
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
+![image](https://user-images.githubusercontent.com/36165953/48277194-f1fbec80-e417-11e8-96cf-fe32514ded3d.png)
+
 
 ```
 **Achievements**
