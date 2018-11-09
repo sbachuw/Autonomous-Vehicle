@@ -33,7 +33,7 @@ Primary tasks for this project included:
 
 ```
 **Achievements**
-1. Fastest car around the track (17 seconds)
+1. Fastest recorded car time around the track (17 seconds)
 2. Covered all 5 checkpoints inside the lane markers
 3. Stopped precisely 300 mm from front obstacle 
 
