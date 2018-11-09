@@ -9,9 +9,11 @@ Here are some of the details of this project completed by:
 4. _Kaushik Tilve_ 
 
 ![image](https://user-images.githubusercontent.com/36165953/48277194-f1fbec80-e417-11e8-96cf-fe32514ded3d.png)
+_(From L to R: Yong, Akil, Kaushik, Sanket)_
 
 Primary tasks for this project included:
 
+```
 ## Ultrasonic distance Filtering
 • Sensor values filtering using Kalman Filter
 • Piece-wise fitting using appropritate caliberation function
@@ -25,15 +27,13 @@ Primary tasks for this project included:
 
 ## Adaptive Cruise Control 
 • It needs to eventually come to a halt or adjust speed accordingly to a front obstacle or a car ahead 
+```
 
 **Achievements**
 1. Fastest recorded car time around the track (17 seconds)
 2. Covered all 5 checkpoints inside the lane markers
 3. Stopped precisely 300 mm from front obstacle 
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kaushiktilve/Autonomous-Vehicle/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
 ### Support or Contact
 
