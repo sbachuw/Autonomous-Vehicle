@@ -35,7 +35,6 @@ Primary tasks for this project included:
 3. Stopped precisely 300 mm from front obstacle 
 
 
-
 **Support/Contact**
 
 Are you not finding what you're looking for? You can reach out to us at [Kaushik's website](https://www.kaushiktilve.com/contact) or email us at sbachuw@clemson.edu and we’ll help you sort it out!
